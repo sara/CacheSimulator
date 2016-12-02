@@ -1,0 +1,48 @@
+step 1: make the cache
+	should be a Node array of size # of sets by associativity, plus one
+	first column: Node containing set index bits
+	second column: tag bits
+	third column: LRU/FIFO nodes
+
+step 2: do the thing
+	1. check the instruction (read or write?)
+	2. Read the desired address - must find a way to save the instruction as fgets progresses! maybe run fgets again in the while loop once the instruction has been read, using a different variable, so you can use both at once
+	3. convert the hex address to binary
+	4. use the set index bits and the tag bits to see ifit's in the cache - SET INDEX BITS AND TAG BITS ARE ALL YOU NEED TO DO THIS
+	5. if the address is NOT in the cache, put its TAG BITS into the TAG BITS slot in the array and increment READ by one. if the command was WRITE, incremement that as well. Increment miss. Put the new address in the cache. if something has to be ejected:
+		FIFO: check the address in the head. replace the corresponding tag with the current one. put the current one at the bottom of the queue.
+		LRU: same thing. the head will be the address least recently used.
+
+	6. if the address IS in the cache, increment hit. if the write policy is write through AND the command is write, increment write. if the replacement policy is FIFO, do nothing with the queue. If it's LRU, move the corresponding Node to the BACK of the queue. If the write policy is write back and the command is write, indicate a change in the dirty bit. when that address is removed from the cache, increment write
+
+	ONCE YOU'RE DONE MAKE SURE TO VALIDATE INPUT FOR POWERS OF TWO
+
+
+	write function:
+	use the set index bits and the tag bits to see if desired address is in the cache
+	if it is:
+		1. incremement hitNum
+		2. if the write policy is write through, increment writeNum
+		3. if the write policy is write back, change the dirty bit to one
+
+	if it isn't:
+		1. increment missNum and readNum
+		2. iterate through all the blocks in the set to find an open slot
+			if there is one:
+			- set the valid bit of the slot to 1
+			- set the tag of the slot equal to the tag of the desired address
+			- ***not sure what to say about writeNum
+		
+			if there isn't one:
+			- iterate through the blocks in the set to find which is to be evicted based on FIFO or LRU
+			- if the write policy is write back, check the dirty bit. if it is equal to one, increment writeNum, otherwise do not
+			- set tag equal to desired address tag, valid bit equal to one
+
+
+
+
+
+
+
+
+
