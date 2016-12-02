@@ -167,7 +167,7 @@ void readFromCache(char* hexVal, Cache cache)
 	int set =*setPointer;
 	char* binaryNum = hexToBinary(hexVal);
 	free (setPointer);
-	printf("BINARY: %s TAG: %s, SET: %i\n", binaryNum, tag, set);
+	//printf("BINARY: %s TAG: %s, SET: %i\n", binaryNum, tag, set);
 	for (i=0; i<cache->associativity; i++)
 	{
 		//if there's a hit
