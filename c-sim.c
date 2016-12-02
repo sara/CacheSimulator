@@ -54,11 +54,13 @@ int main(int argc, char** argv)
 		*setIndexBits+=1;
 	}
 	
-	while (blockSize>1)
+	*blockOffsetBits = log(blockSize)/log(2);
+	/*while (blockSize>1)
 	{
-		blockSize >>=1;
+		blockSize = blockSize/2;
 		*blockOffsetBits ++;
-	}
+	}*/
+	//printf("BLOCK OFFSET BITS: %i", *blockOffsetBits);
 	int i, j;
 	Cache myCache = makeItRain(numSets, association, replacementPolicy, writePolicy);
 	myCache->setIndexNum = *setIndexBits;
